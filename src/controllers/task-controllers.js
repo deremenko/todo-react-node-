@@ -12,7 +12,7 @@ const getAllTasks = async (req, res) => {
     const tasks = await getTasks();
 
     res.status(200).send(tasks);
-  } catch (e) {
+  } catch (error) {
     res.status(400).send("Failed to get tasks")
   }
 };
@@ -23,7 +23,7 @@ const createOneTask = async (req, res) => {
     const tasks = await createTask(text);
 
     res.status(200).send(tasks);
-  } catch (e) {
+  } catch (error) {
     res.status(400).send("Failed to create tasks")
   }
 };
@@ -33,39 +33,31 @@ const deleteOneTask = async (req, res) => {
     const { id } = req.params;
     const deletedTask = await deleteTask(id);
 
-    if (deletedTask) {
-      res.status(200).send(deletedTask);
-    } else {
-      res.status(404).send('Task not found');
-    }
-  } catch (e) {
-    console.error('Failed to delete task:', e);
-    res.status(400).send('Internal Server Error');
+    res.status(200).send(deletedTask);
+  } catch (error) {
+    res.status(400).send('Failed to delete task.');
   }
 };
 
 const deleteAllTask = async (req, res) => {
   try {
-    const { id } = req.params;
-    const deletedTasks = await deleteTasks(id);
+    const deletedTasks = await deleteTasks();
 
     res.status(200).send(deletedTasks);
-  } catch (e) {
-    console.error('Failed to delete tasks:', e);
-    res.status(400).send('Internal Server Error');
+  } catch (error) {
+    res.status(400).send('Failed to delete tasks.');
   }
 };
 
-const editCheckTask = async (req, res) => {
+const editCheckBox = async (req, res) => {
   try {
     const { id } = req.params;
     const { isCheck } = req.body;
-    const editedTaskCheck = await editCheck(id, isCheck);
+    const editedTask = await editCheck(id, isCheck);
 
-    res.status(200).send(editedTaskCheck);
-  } catch (e) {
-    console.error('Failed to checks tasks:', e);
-    res.status(400).send('Internal Server Error');
+    res.status(200).send(editedTask);
+  } catch (error) {
+    res.status(400).send('Failed to update task check status.');
   }
 };
 
@@ -76,9 +68,8 @@ const editTextTask = async (req, res) => {
     const editedTask = await editText(id, text);
 
     res.status(200).send(editedTask);
-  } catch (e) {
-    console.error('Failed to edit tasks:', e);
-    res.status(400).send('Internal Server Error');
+  } catch (error) {
+    res.status(400).send('Failed to edit task.');
   }
 };
 
@@ -87,6 +78,6 @@ module.exports = {
   createOneTask,
   deleteOneTask,
   deleteAllTask,
-  editCheckTask,
+  editCheckBox,
   editTextTask
 };

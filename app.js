@@ -1,9 +1,8 @@
-const Task = require("./src/models/task.js");
-const apiRoutes = require("./src/routes/task.js");
 const express = require("express");
 const cors = require("cors");
+const { PORT, DB_CONNECTION } = require("./config.js");
+const apiRoutes = require("./src/routes/task.js");
 const mongoose = require("mongoose");
-const { PORT, DB_CONNECTION } = require('./config.js');
 const app = express();
 
 app.use(cors());
