@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { validationText } = require("../middlewares/task-validation.js");
 const { 
   getAllTasks, 
   createOneTask, 
@@ -10,10 +11,10 @@ const {
 } = require("../controllers/task-controllers.js");
 
 router.get('/tasks', getAllTasks);
-router.post('/tasks', createOneTask);
+router.post('/tasks', validationText, createOneTask);
 router.delete('/tasks/:id', deleteOneTask);
 router.delete('/tasks', deleteAllTask);
 router.patch('/tasks/:id/checkbox', editCheckBox);
-router.patch('/tasks/:id', editTextTask);
+router.patch('/tasks/:id', validationText, editTextTask);
 
 module.exports = router;

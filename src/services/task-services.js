@@ -1,14 +1,12 @@
 const Task = require("../models/task.js");
-const { validateTaskText } = require("./../middlewares/validateTaskText.js");
 
 const getTasks = async () => {
   const tasks = await Task.find();
   return tasks;
 };
 
-const createTask = async (text) => {
-  const correctText = validateTaskText(text)
-  const newTask = new Task({ text: correctText });
+const createTask = async (newText) => {
+  const newTask = new Task({ text: newText });
   const savedTask = await newTask.save();
 
   return savedTask;
@@ -34,11 +32,10 @@ const editCheck = async (_id, isCheck) => {
   return editTask ;
 };
 
-const editText = async (_id, text) => {
-  const correctText = validateTaskText(text)
+const editText = async (_id, newText) => {
   const editTask = await Task.findOneAndUpdate(
     { _id }, 
-    { $set: { text: correctText } },
+    { $set: { text: newText } },
     { new: true }
   );
 
