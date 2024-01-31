@@ -1,10 +1,12 @@
 const { check} = require("express-validator");
+const { validatorResult } = require("../middlewares/validation-result.js");
 
 const validationText = [
   check('text')
     .isString()
     .trim()
-    .notEmpty()
+    .notEmpty(),
+    validatorResult
 ];
 
 module.exports = {
